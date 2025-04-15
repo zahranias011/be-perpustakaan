@@ -35,7 +35,7 @@ public class authController {
         }
 
         userService.saveUser(newUser.getNama(), newUser.getNpm(), newUser.getPassword());
-        return ResponseEntity.ok("Registrasi berhasil!");
+        return ResponseEntity.ok("Registrasi berhasil!!");
     }
 
     @GetMapping("/test")
