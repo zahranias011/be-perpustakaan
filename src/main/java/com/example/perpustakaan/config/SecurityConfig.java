@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-
 public class SecurityConfig {
 
     @Bean
@@ -23,31 +22,31 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Bean untuk konfigurasi Spring Security
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())  // Menonaktifkan CSRF untuk API
             .cors(Customizer.withDefaults()) // Mengaktifkan CORS
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()  // Endpoint auth tidak perlu login
+                .requestMatchers("/auth/**", "/api/buku/**", "/api/reviews/**", "/api/buku/search").permitAll() // Pastikan /api/buku/search diizinkan
                 .anyRequest().authenticated()  // Endpoint lainnya butuh login
             );
 
         return http.build();
     }
 
-     // Bean untuk konfigurasi CORS
-     @Bean
-     public CorsConfigurationSource corsConfigurationSource() {
-         CorsConfiguration config = new CorsConfiguration();
-         config.setAllowedOrigins(List.of("http://localhost:5173"));  // URL frontend
-         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-         config.setAllowedHeaders(List.of("*"));
-         config.setAllowCredentials(true);  // Mengizinkan cookies atau session
- 
-         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-         source.registerCorsConfiguration("/**", config);
-         return source;
-     }
+    // Bean untuk konfigurasi CORS
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:5173"));  // URL frontend
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);  // Mengizinkan cookies atau session
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }
+

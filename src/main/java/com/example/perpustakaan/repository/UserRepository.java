@@ -8,3 +8,4 @@ import com.example.perpustakaan.model.Login;
 public interface UserRepository extends JpaRepository<Login, Long> {
     Login findByNpm(String npm);
 }
+    

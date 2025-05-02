@@ -42,4 +42,5 @@ public class authController {
     public ResponseEntity<String> testApi() {
         return ResponseEntity.ok("✅ Backend aktif dan aman diakses!");
     }
-}
+
+}   
